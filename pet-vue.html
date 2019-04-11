@@ -19,15 +19,21 @@
         <div class="row product">
           <div class="col">
             <figure>
+              <!-- The products image path is bound to the src of
+              the img tag using a v-bind directive. This is ATTRIBUTE BINDING.
+              Any valid element attribute can be bound using v-bind directive. -->
               <img v-bind:src="product.image">
             </figure>
           </div>
           <div class="col col-expand">
+            <!-- Can display properties using the v-text directive... -->
             <!-- <h1 v-text="product.title"></h1> -->
-            <h1>{{ product.title }}</h1>
-            <p v-html="product.description"></p>
             <!-- <p v-text="product.description"></p> -->
             <!-- <p v-text="product.price" class="price"></p> -->
+
+            <!-- Or like this -->
+            <h1>{{ product.title }}</h1>
+            <p v-html="product.description"></p>
             <p class="price">{{ product.price | formatPrice }}</p>
           </div>
         </div>
@@ -35,7 +41,8 @@
     </div>
 
       <script type="text/javascript">
-        // Shows a variable used to enable or disable our callbacks
+        // Shows a variable used to enable or disable our callbacks/logging of lifecycle events
+        // Outside Vue instance so it can be used globally
         var APP_LOG_LIFECYCLE_EVENTS = true;
 
         var webstore = new Vue({
@@ -43,7 +50,8 @@
           // Adds data object to the Vue options
           data: {
             sitename: 'Vue.js Pet Depot', // sitename property we bind to in the header
-            product: {
+            product: { // object for product data
+              // product's attributes are properties of the product object
               id: 1001,
               title: "Cat Food, 25lb bag",
               description: "A 25 pound bag of <em>irresistible</em> organic goodness for your cat.",
@@ -54,10 +62,10 @@
           filters: {
             formatPrice: function(price) {
               if (!parseInt(price)) {return "";}
-              if (price > 99999) {
+              if (price > 99999) { // formats values $1,000 and up
                 var priceString = (price / 100).toFixed(2);
                 var priceArray = priceString.split("").reverse();
-                var index = 3;
+                var index = 3; // add a comma after every 3 digits 00.000,1
                 while (priceArray.length > index + 3) {
                   priceArray.splice(index+3, 0, ",");
                   index += 4;
@@ -68,41 +76,51 @@
               }
             }
           },
+          // below are HOOKS (functions that get "hooked" onto part of the Vue library's code)
+          // Logs the beforeCreate event
+          // Mainly used to see what is going on in the application, good for debugging
           beforeCreate: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("beforeCreate");
             }
           },
+          // Logs the created event
           created: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("created");
             }
           },
+          // Logs the beforeMount event
           beforeMount: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("beforeMount");
             }
           },
+          // Logs the mounted event
           mounted: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("mounted");
             }
           },
+          // Logs the beforeUpdate event
           beforeUpdate: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("beforeUpdate");
             }
           },
+          // Logs the updated event
           updated: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("updated");
             }
           },
+          // Logs the beforeDestroy event
           beforeDestroy: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("beforeDestroy");
             }
           },
+          // Logs the destroyed event
           destroyed: function() {
             if (APP_LOG_LIFECYCLE_EVENTS) {
               console.log("destroyed");
