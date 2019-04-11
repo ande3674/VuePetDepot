@@ -9,7 +9,11 @@
   <body>
     <div id="app">
       <header>
+        <!-- Data binding for the sitename property -->
+        <!-- A v-text directive prints a string representation of the property it references -->
         <h1 v-text="sitename"></h1>
+        <!-- If you need to display a property value in a larger string, use Mustache syntax -->
+        <p>Welcome to {{ sitename }}</p>
       </header>
       <main>
         <div class="row product">
@@ -31,13 +35,14 @@
     </div>
 
       <script type="text/javascript">
-
+        // Shows a variable used to enable or disable our callbacks
         var APP_LOG_LIFECYCLE_EVENTS = true;
 
         var webstore = new Vue({
           el: '#app',
+          // Adds data object to the Vue options
           data: {
-            sitename: 'Vue.js Pet Deopt',
+            sitename: 'Vue.js Pet Depot', // sitename property we bind to in the header
             product: {
               id: 1001,
               title: "Cat Food, 25lb bag",
