@@ -35,6 +35,7 @@
             <h1>{{ product.title }}</h1>
             <p v-html="product.description"></p>
             <p class="price">{{ product.price | formatPrice }}</p>
+            <button class="default" v-on:click="addToCart">Add to  cart</button>
           </div>
         </div>
       </main>
@@ -57,7 +58,14 @@
               description: "A 25 pound bag of <em>irresistible</em> organic goodness for your cat.",
               price: 2000,
               image: "assets/images/product-fullsize.png"
-            }
+            },
+            cart: []
+          },
+          methods: {
+            addToCart: function() {
+              //console.log(this.cart);
+              this.cart.push(this.product.id);
+            },
           },
           filters: {
             formatPrice: function(price) {
