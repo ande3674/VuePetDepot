@@ -72,10 +72,11 @@
               <div class="col-md-2"><strong>State:</strong>
               <select v-model="order.state" class="form-control">
                 <option disabled value="">State</option>
-                <option>AL</option>
-                <option>AR</option>
-                <option>CA</option>
-                <option>NV</option>
+                <option v-bind:value="order.states.AL">AL</option>
+                <option v-bind:value="order.states.AR">AR</option>
+                <option v-bind:value="order.states.CA">CA</option>
+                <option v-bind:value="order.states.MN">MN</option>
+                <option v-bind:value="order.states.NV">NV</option>
               </select>
               </div>
             </div>
@@ -87,15 +88,15 @@
             </div>
             <div class="form-group">
               <div class="col-md-6 boxes">
-                <input type="checkbox" id="gift" v-model="order.gift">
+                <input type="checkbox" id="gift" value="true" v-bind:true-value="order.sendGift" v-bind:false-value="order.dontSendGift" v-model="order.gift">
                 <label for="gift">Ship as gift?</label>
               </div>
             </div>
             <div class="form-group">
               <div class="col-md-6 boxes">
-                <input type="radio" id="home" value="Home" v-model="order.method">
+                <input type="radio" id="home" v-bind:value="order.home" v-model="order.method">
                 <label for="home">Home</label>
-                <input type="radio" id="business" value="Business" v-model="order.method">
+                <input type="radio" id="business" v-bind:value="order.business" v-model="order.method">
                 <label for="business">Business</label>
               </div>
             </div>
@@ -110,6 +111,11 @@
                 Method: {{order.method}}
                 Gift: {{order.gift}}
               </pre>
+            </div>
+            <div class="form-group">
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-primary submit" v-on:click="submitForm">Place Order</button>
+              </div>
             </div>
           </div>
         </div>
@@ -134,8 +140,19 @@
               city: '',
               zip: '',
               state: '',
-              method: 'Home',
-              gift: false
+              states: {
+                AL: 'Alabama',
+                AR: 'Arizona',
+                CA: 'California',
+                MN: 'Minnesota',
+                NV: 'Nevada'
+              },
+              method: 'Home Address',
+              home: 'Home Address',
+              business: 'Business Address',
+              gift: 'Do Not Send As A Gift',
+              sendGift: 'Send As A Gift',
+              dontSendGift: 'Do Not Send As A Gift'
             },
             product: { // object for product data
               // product's attributes are properties of the product object
@@ -156,6 +173,9 @@
             showCheckout() {
               this.showProduct = this.showProduct ? false : true;
             },
+            submitForm() {
+              alert('Submitted')
+            }
           },
           computed: {
             cartItemCount: function() {
